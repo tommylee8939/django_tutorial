@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+    script
+    <div id="msg">
+      그냥 메세지 입니다
+    </div>
+    <script>
+    $(document).ready(function(){
+      $('#msg').text('변경합니다')
+    })
+    </script>
+
+    <button id="btn">click</button>
+    <script>
+         $(document).ready(function(){
+            $('#btn').click(function(){
+                alert('btn click')
+        })
+    })
+    </script>
+    
+    <hr/>
+    <div id="msg2">
+      바뀌지 않은 메시지 입니다
+    </div>
+    <button id="btn2">click</button>
+    <hr/>
+    <fieldset>
+        <legend>개인정보</legend>
+        <label for="fname" >Frist Name:</label> <br/>
+        <input type="text" name="fname" id ='fname'> <br/>
+        <label for="fname">Last Name:</label> <br/>
+        <input type="text" name="lname" id = 'lname'> <br/>
+        <button id="openBtn">open</button><button id="closeBtn">close</button>
+        <button id='getBtn'> get </button>
+    </fieldset>
+    <hr/>
+
+    <div id='result'></div>
+    <button id='resultBtn'>click </button>
+    <hr/>
+
+    <fieldset>
+        <legend>비동기 통신 ajax</legend>
+        <select id="maker">
+            <option value="audi">audi</option>
+            <option value="bmw">bmw</option>
+            <option value="benz">benz</option>
+        </select>
+        <select id="model">
+            <option value="">선택하세요</option>
+        </select> <br/>
+        <input type="text" name="id" id="id">
+        <button id="ajaxBtn">아이디 중복체크</button>
+        <div id='idChk'></div>
+    </fieldset>
+
+    <script>
+        name ='임정섭'
+        obj = {id :'jslim' , pwd :'jslim'}
+        list = [
+            {id :'jslim01' , pwd :'jslim01'},
+            {id :'jslim02' , pwd :'jslim02'}
+        ]
+
+        bmwAry = ['320d','520d','640d','750dl']
+        audiAry =['a4','a6','a8','rs8']
+        benzAry = ['c300','e300','s500','s580']
+        function display(ary){
+            txt = '<option>선택하세요</option>'
+            $.each(ary,function(idx,data){
+                txt+= '<option>'+data+'</option>'
+            })
+            $('#model').empty().append(txt)
+        }
+         $(document).ready(function(){
+
+            $('#ajaxBtn').click(function() {
+                alert($('#id').val())
+                $.ajax({
+                    url : "../idChkAjax/",
+                    type : 'post' ,
+                    data : {    'csrfmiddlewaretoken' : '{{csrf_token}}',
+                                id : $('#id').val() },
+                    dataType : 'json' ,
+                    success  : function(list) {
+                        $('#idChk').text(list[0].msg)
+                    }
+                })
+            })
+
+            $('#maker').change(function(){
+                maker = $('#maker').val()
+                if(maker=='bmw'){
+                    display(bmwAry)
+                }
+                else if(maker=='audi'){
+                    display(audiAry)
+                }
+                else {
+                    display(benzAry)
+                }
+            })
+
+            $('#btn2').click(function(){
+                $('#msg2').text('변경한 메세지 입니다')
+            })
+
+            $('#openBtn').click(function(){
+                $('#fname').prop('disabled','')
+                $('#lname').prop('disabled','')
+            })
+
+            $('#closeBtn').click(function(){
+                $('#fname').prop('disabled','disabled')
+                $('#lname').prop('disabled','disabled')
+            })
+
+            $('#getBtn').click(function(){
+                fname = $('#fname').val()
+                lname = $('#lname').val()
+                alert(fname+" "+lname)
+            })
+
+            $('#resultBtn').click(function() {
+            // text() , html() , append()
+            // $('#result').html('<h1>'+name+'<h1>')
+            // $('#result').text(obj.id +' , '+ obj.pwd)
+            // 아래에서 text사용하게 되면 겹치기때문애 append 사용한다
+            $.each(list , function(idx, obj) {
+                $('#result').append(idx +' , '+ obj.id +' , '+ obj.pwd+'<br/>')
+            })
+        })
+
+    })
+    </script>
+</body>
+</html>

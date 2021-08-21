@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table, th, td {
+            border : 1px solid blue
+        }
+        th, td{
+            padding : 15px
+        }
+        th {
+            text-align : left
+        }
+
+    </style>
+</head>
+<body>
+    front/main
+    <hr/>
+    <form action="../action_page" method="get">
+        <fieldset>
+            <legend>개인정보</legend>
+            <label for="fname" >Frist Name:</label> <br/>
+            <input type="text" name="fname" readonly> <br/>
+            <label for="fname">Last Name:</label> <br/>
+            <input type="text" name="lname" required> <br/>
+        </fieldset>
+        <hr/>
+        <input type="radio" name="language" value="html"> <label for="html">HTML</label><br/>
+        <input type="radio" name="language" value="css"> <label for="html">CSS</label><br/>
+        <input type="radio" name="language" value="javascript"> <label for="html">JAVASCRIPT</label><br/>
+        <hr/>
+        <input type="checkbox" name="vehicle01" value="bike"><label for="vehicle">Bike</label><br/>
+        <input type="checkbox" name="vehicle02" value="car"><label for="vehicle">Car</label><br/>
+        <input type="checkbox" name="vehicle03" value="bus"><label for="vehicle">Bus</label><br/>
+        <hr/>
+        <select name="cars">
+        <option value="audi">Audi</option>
+        <option value="audi">Benz</option>
+        <option value="audi">Volvo</option>
+        </select>
+        <hr/>
+        <textarea name="msg" id="" cols="30" rows="10"></textarea><br/>
+        <hr/>
+        <input type="hidden" name = 'hide' value="jslim">
+        <hr/>
+        <label for="phone"> Enter your phone numnber</label> <br/>
+        <input type="tel" name="phone" placeholder="xxx-xxxx-xxxx" pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}">
+
+        <input type="submit" value="SEND">
+    </form>
+    <hr/>
+    :: Table
+    <table>
+        <tr>
+            <th>First Name</th> <th>Last Name</th> <th>Age </th>
+        </tr>
+        <tr>
+            <td>Kanghee</td> <td>Lee</td> <th>27</th>
+        </tr>
+        <tr>
+            <td>Kanghee</td> <td>Lee</td> <th>27</th>
+        </tr>
+    </table>
+    <hr/>
+
+    ::List
+    <ul>
+        <li>아구찜</li>
+        <li>비빔밥</li>
+        <li>짬뽕</li>
+    </ul>
+    <ol>
+        <li>아구찜</li>
+        <li>비빔밥</li>
+        <li>짬뽕</li>
+    </ol>
+    <form>
+    <input list="browsers">
+    <datalist id="browsers">
+        <option value="firefox"></option>
+        <option value="chrome"></option>
+        <option value="safari"></option>
+        <option value="explorer"></option>
+    </datalist>
+    </form>
+    <hr/>
+    <ul>
+        <li><a href="../script_page/">script index</a></li>
+    </ul>
+
+</body>
+</html>

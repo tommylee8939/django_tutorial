@@ -1,0 +1,117 @@
+{% include 'header.html'%}
+{% block content %}
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<!-- left column -->
+		<div class="col-md-12">
+			<!-- general form elements -->
+            <!-- general form elements -->
+			<div class='box'>
+				<div class="box-header with-border">
+					<h3 class="box-title">Board List</h3>
+				</div>
+				<div class='box-body'>
+<!--				form으로 씌우지 말고 ajax 비동기 통신으로 할거다-->
+<!--				name은 form processing에서의 변수명 id는 식별자-->
+
+					<select name="" id="searchType">
+						<option value="title">제목</option>
+						<option value="writer">작성자</option>
+					</select>
+					<input type="text" id="searchKeyword">
+
+					<button id="searchBtn">Search</button>
+					<button id='newBtn'>New Board</button>
+				
+				</div>
+			</div>
+
+          <div class="box">
+				<div class="box-header with-border">
+					<h3 class="box-title">LIST ALL PAGE</h3>
+				</div>
+				<div class="box-body">
+
+{%if posts%}
+<table class="table table-bordered">
+	<tr>
+		<th style="width: 10px">BNO</th>
+		<th>TITLE</th>
+		<th>WRITER</th>
+		<th>REGDATE</th>
+		<th style="width: 40px">VIEWCNT</th>
+	</tr>
+
+	<tbody id="tbody">
+	{%for post in posts%}
+	<tr>
+		<td>{{post.id}}</td>
+<!--		template language url-->
+<!--		<td><a href="{%url 'bbs_read' post.id %}">{{post.title}}</a></td>-->
+		<td><a href="../bbs_read/{{post.id}}">{{post.title}}</a></td>
+		<td>{{post.writer}}</td>
+		<td>{{post.regdate}}</td>
+		<td><span class="badge bg-red">{{post.viewcnt}}</span></td>
+	</tr>
+    {%endfor%}
+	</tbody>
+
+</table>
+{%else%}
+	<p>데이터가 없습니다</p>
+{%endif%}
+
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">Footer</div>
+				<!-- /.box-footer-->
+			</div>
+		</div>
+		<!--/.col (left) -->
+
+	</div>
+	<!-- /.row -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<script>
+	$(document).ready(function(){
+		$('#newBtn').click(function(){
+			location.href = '../bbs_registerForm'
+		})
+		$('#searchBtn').click(function(){
+			//$('#tbody').empty()
+			//alert($('#searchType').val()+' '+$('#searchKeyword').val())
+			$.ajax({
+                    url : "../bbs_search/",
+                    type : 'post' ,
+                    data : {    'csrfmiddlewaretoken' : '{{csrf_token}}',
+                                type : $('#searchType').val(),
+                                keyword : $('#searchKeyword').val() },
+                    dataType : 'json' ,
+                    success  : function(postLists) {
+                    	$('#tbody').empty()
+                    	$.each(postLists,function(idx,post){
+                			txt = '<tr><td>'+ post.id +'</td>'
+                    		txt += '<td><a href="../bbs_read/'+post.id + '">'+post.title+'</a></td>'
+                    		txt += '<td>'+post.writer+'</td>'
+                    		txt += '<td>'+post.regdate+'</td>'
+                    		txt += '<td><span class="badge bg-red">'+post.viewcnt+'</span></td></tr>'
+                    		$('#tbody').append(txt)
+            			})
+
+                    }
+                })
+		})
+	})
+
+</script>
+{% endblock content %}
+{% include 'footer.html'%}
+
+
+
+

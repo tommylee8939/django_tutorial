@@ -1,0 +1,25 @@
+ul {
+    list-style-type : none;
+    margin:0;
+    pedding:0;
+    overflow : hidden;
+    background-color : #333;
+}
+
+li {
+    float:left;
+}
+
+li a {
+    display : black;
+    padding : 20px;
+    color : white
+}
+
+li a:hover {
+    background-color : #111
+}
+
+.active:hover {
+    background-color : green
+}
